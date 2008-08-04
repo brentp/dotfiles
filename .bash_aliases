@@ -9,3 +9,5 @@ alias doctest="nosetests --with-doctest --doctest-extension=.txt"
 
 alias nlog="tail /usr/local/nginx/logs/error.log"
 alias nrestart="sudo /etc/init.d/nginx stop; sleep 0.3; sudo /etc/init.d/nginx start"
+
+alias grep="grep --color=auto"
