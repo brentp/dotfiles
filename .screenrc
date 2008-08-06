@@ -1,0 +1,25 @@
+altscreen on
+autodetach on
+vbell on
+
+defscrollback 10000
+shell -$SHELL
+
+startup_message off
+
+# use the ` key for escape. instead of C-a
+escape ``
+
+#change the hardstatus settings to give an window list at the bottom of the                                                                        
+#screen, with the time and date and with the current window highlighted                                                                            
+hardstatus alwayslastline  '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+
+
+# allow scrolling
+termcapinfo xterm ti@:te@ 
+
+activity "%c activity -> %n%f %t"
+bell "%c bell -> %n%f %t^G"
+vbell_msg " *beep* "
+
