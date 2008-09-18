@@ -9,7 +9,8 @@
     praise = blame
     outgoing = log origin/master..
 
-    logy = log @{yesterday}
+    logy = log --since='2 days ago'
+    logw = log --since='1 week ago'
 
 
 [apply]
