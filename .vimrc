@@ -21,14 +21,14 @@
 " Python: 4 spaces
 " C: 8 spaces (pre-existing files) or 4 spaces (new files)
 au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
-au BufRead *.c,*.h set shiftwidth=8
+au BufRead *.c,*.h set shiftwidth=4
 au BufNewFile *.c,*.h set shiftwidth=4
 
 " Number of spaces that a pre-existing tab is equal to.
 " For the amount of space used for a new tab use shiftwidth.
 " Python: 8
 " C: 8
-au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=8
+au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
 
 " Replace tabs with the equivalent number of spaces.
 " Also have an autocmd for Makefiles since they require hard tabs.
@@ -89,7 +89,7 @@ filetype indent on
 set autoindent
 
 " Folding based on indentation: 
-set foldmethod=indent
+"set foldmethod=indent
 
 " #######################################################
 " #######################################################
@@ -118,7 +118,8 @@ set wildmode=list:longest,full
 set hlsearch  " Highlight search
 
 set laststatus=2
-set statusline=%<%f\ %h%r%m%=%-14.(%l,%c%V%)\ %P
+"set statusline=%<%f\ %h%r%m%=%-14.(%l,%c%V%)\ %P
+set statusline=(%(%l,%c%))\ %<%F%=\ [%M%R%H%Y]\ [ascii\ %3b]\ %P
 
 let g:miniBufExplSplitBelow = 0
 let g:miniBufExplMapWindowNavArrows = 1
@@ -181,9 +182,32 @@ set encoding=utf-8
 " tab completion of python comands
 " import re
 " "re.f<tab> brings up a menu.
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 inoremap <TAB> <C-x><C-o>
+inoremap <TAB> <C-r>=InsertTabWrapper()<CR>
 set expandtab
+
+" http://www.mattrope.com/computers/conf/vimrc.html
+" InsertTabWrapper() {{{
+" Tab completion of tags/keywords if not at the beginning of the
+" line.  Very slick.
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+" InsertTabWrapper() }}}
+
+" http://stackoverflow.com/questions/164847/what-is-in-your-vimrc#164935
+" highlight the word under the cursor
+highlight flicker cterm=bold ctermfg=white
+au CursorMoved <buffer> exe 'match flicker /\V\<'.escape(expand('<cword>'), '/').'\>/'
+
+
 
 
 " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
@@ -195,6 +219,16 @@ def EvaluateCurrentRange():
 EOL
 map <C-h> :py EvaluateCurrentRange()
 
+" http://stackoverflow.com/questions/164847/what-is-in-your-vimrc#165267
+" Make cursor move as expected with wrapped lines:
+inoremap <Down> <C-o>gj
+inoremap <Up> <C-o>gk
+
+
+let g:clipbrdDefaultReg = '+'
+
 
 " TODO: more stuff from here:
 " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
+
+
