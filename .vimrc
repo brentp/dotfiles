@@ -30,6 +30,7 @@ set expandtab
 au BufRead,BufNewFile *.c,*.h set noexpandtab
 au BufRead,BufNewFile Makefile* set noexpandtab
     
+highlight BadWhitespace ctermbg=red guibg=red
 " Display tabs at the beginning of a line in Python mode as bad.
 au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 " Make trailing whitespace be flagged as bad.
@@ -97,10 +98,11 @@ set wildmode=list:longest,full
 
 "set number    " Line numbering
 set hlsearch  " Highlight search
+hi Search       term=reverse  ctermfg=White ctermbg=Black guibg=Black guifg=White
 
 set laststatus=2
-"set statusline=%<%f\ %h%r%m%=%-14.(%l,%c%V%)\ %P
-set statusline=(%(%l,%c%))\ %<%F%=\ [%M%R%H%Y]\ [ascii\ %3b]\ %P
+set statusline=%<%f\ %h%r%m%=%-14.(%l,%c%V%)\ %P
+"set statusline=(%(%l,%c%))\ %<%F%=\ [%M%R%H%Y]\ [ascii\ %3b]\ %P
 
 let g:miniBufExplSplitBelow = 0
 let g:miniBufExplMapWindowNavArrows = 1
@@ -185,7 +187,7 @@ endfunction
 
 " http://stackoverflow.com/questions/164847/what-is-in-your-vimrc#164935
 " highlight the word under the cursor
-highlight flicker cterm=bold ctermfg=white
+highlight flicker cterm=bold ctermfg=red
 au CursorMoved <buffer> exe 'match flicker /\V\<'.escape(expand('<cword>'), '/').'\>/'
 
 
@@ -213,3 +215,4 @@ let g:clipbrdDefaultReg = '+'
 " http://blog.sontek.net/2008/05/11/python-with-a-modular-ide-vim/
 
 
+autocmd BufRead *.as set filetype=actionscript
