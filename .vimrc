@@ -110,8 +110,8 @@ let g:miniBufExplUseSingleClick = 1
 
 " http://dotfiles.org/~starg/.vimrc
 " Map F6 to execute a Python script interactively. NICE
-autocmd FileType python imap <F6> <C-O>:w<CR>:!python -i "%"<CR>
-autocmd FileType python map <F6> :w<CR>:!python -i "%"<CR>
+autocmd FileType python imap <F6> <C-O>:w<CR>:!ipython -i "%"<CR>
+autocmd FileType python map <F6> :w<CR>:!ipython -i "%"<CR>
 
 set history=200
 
@@ -216,3 +216,11 @@ let g:clipbrdDefaultReg = '+'
 
 
 autocmd BufRead *.as set filetype=actionscript
+autocmd BufRead *.hx set filetype=actionscript
+autocmd BufRead *.clj set filetype=clojure
+
+filetype plugin indent on
+syntax on
+set nocompatible
+let clj_highlight_builtins = 1
+let clj_paren_rainbow = 1
