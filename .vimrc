@@ -224,3 +224,7 @@ syntax on
 set nocompatible
 let clj_highlight_builtins = 1
 let clj_paren_rainbow = 1
+
+
+" allow using the mouse to set cursor location, etc.
+set mouse=a
