@@ -1,4 +1,0 @@
-set editing-mode vi
-tab: complete
-set completion-ignore-case off
-set blink-matching-paren on
