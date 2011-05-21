@@ -10,4 +10,3 @@ to set up vim::
 git::
 
     cp gitconfig ~/.gitconfig
-
