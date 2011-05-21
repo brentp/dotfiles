@@ -1,0 +1,130 @@
+filetype off
+call pathogen#runtime_append_all_bundles() 
+call pathogen#helptags()
+
+filetype on
+let python_highlight_all=1
+syntax on                    " syntax highlighing
+filetype on                  " try to detect filetypes
+filetype plugin indent on    " enable loading indent file for filetype
+" Keep indentation level from previous line:
+set autoindent
+
+let g:pyflakes_use_quickfix = 0
+let g:pep8_map='<leader>8'
+
+au FileType python set omnifunc=pythoncomplete#Complete expandtab
+let g:SuperTabDefaultCompletionType = "context"
+
+set completeopt=menuone,longest,preview
+
+
+set expandtab
+au BufRead,BufNewFile *.c, *.h, *Makefile* set noexpandtab
+
+
+highlight BadWhitespace ctermbg=red guibg=red
+" Display tabs at the beginning of a line in Python mode as bad.
+au BufRead,BufNewFile *.py,*.pyx match BadWhitespace /^\t\+/
+" Make trailing whitespace be flagged as bad.
+au BufRead,BufNewFile * match BadWhitespace /\s\+$/
+
+" Wrap text after a certain number of characters
+" Python: 79 
+" C: 79
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h set textwidth=79
+
+set shiftwidth=4
+
+" Turn off settings in 'formatoptions' relating to comment formatting.
+" " - c : do not automatically insert the comment leader when wrapping based
+" on
+" "    'textwidth'
+" " - o : do not insert the comment leader when using 'o' or 'O' from command
+" mode
+" " - r : do not insert the comment leader when hitting <Enter> in insert mode
+" " Python: not needed
+" " C: prevents insertion of '*' at the beginning of every line in a comment
+" au BufRead,BufNewFile *.c,*.h set formatoptions-=c formatoptions-=o
+" formatoptions-=r
+"
+
+" find match while typing
+" "
+set incsearch
+set fileformat=unix
+set smartindent
+set showmatch
+set nocompatible
+
+" Autocomplete vim commands on tab
+set wildmenu
+set wildmode=list:longest,full
+
+set hlsearch  " Highlight search
+hi Search       term=reverse  ctermfg=White ctermbg=Black guibg=Black guifg=White
+
+set laststatus=2
+set statusline=%<%f\ %h%r%m%=%-14.(%l,%c%V%)\ %P
+" http://dotfiles.org/~starg/.vimrc
+" " Map F6 to execute a Python script interactively. NICE
+autocmd FileType python imap <F6> <C-O>:w<CR>:!ipython -i "%"<CR>
+autocmd FileType python map <F6> :w<CR>:!ipython -i "%"<CR>
+
+set history=2000
+" use right click
+set clipboard+=unnamed
+set lazyredraw
+" show uncompleted command
+set showcmd
+
+set nostartofline
+set notextmode
+set visualbell
+set backspace=indent,eol,start
+
+set nowritebackup
+
+" after opening a sp window, can jump up/down with ctrl + j/k
+" " NICE
+map <C-J> <C-W>j<C-W>_
+map <C-K> <C-W>k<C-W>_
+
+
+" Tell vim to remember certain things when we exit
+" "  '10 : marks will be remembered for up to 10 previously edited files
+" "  "100 : will save up to 100 lines for each register
+" "  :20 : up to 20 lines of command-line history will be remembered
+" "  % : saves and restores the buffer list
+" "  n... : where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo
+
+" jump to last know position in file:
+" http://vimdoc.sourceforge.net/htmldoc/eval.html#last-position-jump
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Syntax Checking entire file
+" Usage: :make (check file)
+" :clist (view list of errors
+" :cn, :cp (move around list of errors)
+autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+
+set encoding=utf-8
+
+" highlight the word under the cursor
+highlight flicker cterm=bold ctermfg=red
+au CursorMoved <buffer> exe 'match flicker /\V\<'.escape(expand('<cword>'), '/').'\>/'
+
+" execute the visually selected block by hitting Ctrl + h
+python << EOL
+import vim
+def EvaluateCurrentRange():
+    eval(compile('\n'.join(vim.current.range),'','exec'),globals())
+EOL
+map <C-h> :py EvaluateCurrentRange()
+
+" set cursor location w mouse
+set mouse=a
+
+let g:clipbrdDefaultReg = '+'
