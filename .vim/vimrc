@@ -35,6 +35,12 @@ au BufRead,BufNewFile * match BadWhitespace /\s\+$/
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h set textwidth=79
 
 set shiftwidth=4
+set tabstop=4
+
+" allows lines like
+" # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4 
+" to influence behaviour
+set modeline
 
 " Turn off settings in 'formatoptions' relating to comment formatting.
 " " - c : do not automatically insert the comment leader when wrapping based
