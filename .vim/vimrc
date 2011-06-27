@@ -131,6 +131,6 @@ EOL
 map <C-h> :py EvaluateCurrentRange()
 
 " set cursor location w mouse
-set mouse=a
+"set mouse=a
 
 let g:clipbrdDefaultReg = '+'
