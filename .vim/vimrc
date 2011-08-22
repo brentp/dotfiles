@@ -12,6 +12,9 @@ set autoindent
 
 let g:pyflakes_use_quickfix = 0
 let g:pep8_map='<leader>8'
+" nice coloring (red bg, yellow fg for errors)
+highlight SpellBad gui=undercurl term=underline cterm=underline ctermfg=yellow ctermbg=red
+
 
 au FileType python set omnifunc=pythoncomplete#Complete expandtab
 let g:SuperTabDefaultCompletionType = "context"
